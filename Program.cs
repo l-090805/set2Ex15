@@ -1,44 +1,59 @@
-﻿namespace set2Ex15
+﻿using System;
+
+namespace set2Ex15
 {
     internal class Program
     {
-        static bool EsteBitonica(int[] secventa)
-        {
-            int n = secventa.Length;
-
-            if (n < 3)
-            {
-                return false;
-            }
-            int i = 0;
-
-            while (i < n - 1 && secventa[i] <= secventa[i + 1])
-            {
-                i++;
-            }
-
-            if(i == 0 || i == n - 1)
-            {
-                return false;
-            }
-
-            while(i < n - 1 && secventa[i] >= secventa[i + 1])
-            {
-                i++;
-            }
-
-            return i == n - 1;
-        }
-
         static void Main(string[] args)
         {
-            Console.WriteLine("Introdu o secventa de numere separate prin spatiu: ");
-            string input = Console.ReadLine();
+            Console.WriteLine("Numarul de elemente din secventa: ");
+            int n = int.Parse(Console.ReadLine());
 
-            int[] secventa = Array.ConvertAll(input.Split(" "),int.Parse);
+            if (n <= 2)
+            {
+                Console.WriteLine("Secventa este bitonica."); 
+                return;
+            }
 
-            bool rezultat = EsteBitonica(secventa);
-            Console.WriteLine($"Secventa este bitonica: {rezultat}");
+            Console.WriteLine("Introduceti elementele secventei: ");
+            int elementAnterior = int.Parse(Console.ReadLine());
+            int elementCurent;
+
+            bool crescator = true; 
+            bool esteBitonica = true;  
+
+            for (int i = 1; i < n; i++)
+            {
+                elementCurent = int.Parse(Console.ReadLine());
+
+                if (crescator)
+                {
+                    if (elementCurent < elementAnterior)
+                    {
+                       
+                        crescator = false;
+                    }
+                }
+                else
+                {
+                    if (elementCurent > elementAnterior)
+                    {
+                        
+                        esteBitonica = false;
+                    }
+                }
+
+                elementAnterior = elementCurent;
+            }
+
+            if (esteBitonica && !crescator)
+            {
+                Console.WriteLine("Secventa este bitonica.");
+            }
+            else
+            {
+                Console.WriteLine("Secventa NU este bitonica.");
+            }
         }
     }
 }
